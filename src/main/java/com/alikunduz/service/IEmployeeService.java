@@ -13,6 +13,8 @@ public interface IEmployeeService {
 
     public List<DtoEmployee> getAllEmployees();
 
+    public void deleteEmployee(Long id);
+
 
 
 
