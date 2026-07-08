@@ -15,8 +15,7 @@ public interface IEmployeeService {
 
     public void deleteEmployee(Long id);
 
-
-
+    public DtoEmployee updateEmployee(Long id, DtoEmployeeIU dtoEmployeeIU);
 
 
 
