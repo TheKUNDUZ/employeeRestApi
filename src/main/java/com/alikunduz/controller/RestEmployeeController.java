@@ -12,4 +12,6 @@ public interface RestEmployeeController {
     public DtoEmployee saveEmployee(DtoEmployeeIU dtoEmployeeIU);
 
     public List<DtoEmployee> getAllEmployees();
+
+    public void deleteEmployee(Long id);
 }

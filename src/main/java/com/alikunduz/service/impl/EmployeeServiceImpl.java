@@ -42,6 +42,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
         return dtoEmployee;
     }
 
+
+
     @Override
     public DtoEmployee saveEmployee(DtoEmployeeIU dtoEmployeeIU) {
         Employee employee = new Employee();
@@ -55,6 +57,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
         return dtoEmployee;
     }
+
+
 
     @Override
     public List<DtoEmployee> getAllEmployees() {
@@ -78,11 +82,21 @@ public class EmployeeServiceImpl implements IEmployeeService {
                 dtoEmployee.setDepartment(dtoDepartment);
             }
             //
-
             dtolist.add(dtoEmployee);
 
         }
         return dtolist;
+    }
+
+
+
+    @Override
+    public void deleteEmployee(Long id) {
+
+        Optional<Employee> optional =employeeRepository.findById(id);
+        if (optional.isPresent())
+            employeeRepository.delete(optional.get());
+
     }
 
 

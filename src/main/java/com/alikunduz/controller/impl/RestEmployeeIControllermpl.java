@@ -14,13 +14,14 @@ import java.util.List;
 public class RestEmployeeIControllermpl implements RestEmployeeController {
 
     @Autowired
-    private IEmployeeService  employeeService;
+    private IEmployeeService employeeService;
 
     @GetMapping(path = "/list/{id}")
     @Override
     public DtoEmployee findEmployeeById(@PathVariable(value = "id") Long id) {
         return employeeService.findEmployeeById(id);
     }
+
     @PostMapping(path = "/save")
     @Override
     public DtoEmployee saveEmployee(@RequestBody DtoEmployeeIU dtoEmployeeIU) {
@@ -33,6 +34,13 @@ public class RestEmployeeIControllermpl implements RestEmployeeController {
     public List<DtoEmployee> getAllEmployees() {
 
         return employeeService.getAllEmployees();
+    }
+
+    @DeleteMapping(path = "/delete/{id}")
+    @Override
+    public void deleteEmployee(@PathVariable(value = "id") Long id) {
+        employeeService.deleteEmployee(id);
+
     }
 
 
