@@ -94,8 +94,32 @@ public class EmployeeServiceImpl implements IEmployeeService {
     public void deleteEmployee(Long id) {
 
         Optional<Employee> optional =employeeRepository.findById(id);
-        if (optional.isPresent())
+        if (optional.isPresent()) {
             employeeRepository.delete(optional.get());
+
+        }
+    }
+
+
+    @Override
+    public DtoEmployee updateEmployee(Long id , DtoEmployeeIU dtoEmployeeIU) {
+        DtoEmployee dtoEmployee = new DtoEmployee();
+
+        Optional<Employee> optional = employeeRepository.findById(id);
+
+        if (optional.isPresent()) {
+            Employee dbEmployee = optional.get();
+            dbEmployee.setName(dtoEmployeeIU.getName());
+            dbEmployee.setLastName(dtoEmployeeIU.getLastName());
+            dbEmployee.setSalary(dtoEmployeeIU.getSalary());
+
+            Employee updatedEmployee = employeeRepository.save(dbEmployee);
+
+            BeanUtils.copyProperties(updatedEmployee, dtoEmployee);
+        return dtoEmployee;
+        }
+
+        return null;
 
     }
 

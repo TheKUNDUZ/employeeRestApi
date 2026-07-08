@@ -43,5 +43,12 @@ public class RestEmployeeIControllermpl implements RestEmployeeController {
 
     }
 
+    @PutMapping(path = "/update/{id}")
+    @Override
+    public DtoEmployee updateEmployee(@PathVariable(value = "id") Long id,@RequestBody DtoEmployeeIU dtoEmployeeIU) {
+
+        return employeeService.updateEmployee(id, dtoEmployeeIU);
+    }
+
 
 }
