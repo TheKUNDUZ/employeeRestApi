@@ -7,4 +7,7 @@ import java.util.List;
 public interface RestDepartmentController {
 
     public List<DtoDepartment> getAllDepartment();
+
+    public DtoDepartment findDepartmentById(Long id);
+
 }

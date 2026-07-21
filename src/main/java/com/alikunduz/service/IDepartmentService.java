@@ -8,6 +8,7 @@ public interface IDepartmentService {
 
     public List<DtoDepartment> getAllDepartment();
 
+    public DtoDepartment findDepartmentById(Long id);
 
 
 }

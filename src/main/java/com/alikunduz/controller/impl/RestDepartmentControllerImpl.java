@@ -5,6 +5,7 @@ import com.alikunduz.dto.DtoDepartment;
 import com.alikunduz.service.IDepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,6 +15,8 @@ import java.util.List;
 @RequestMapping("/rest/api/department")
 public class RestDepartmentControllerImpl implements RestDepartmentController {
 
+
+
     @Autowired
     IDepartmentService departmentService;
 
@@ -22,5 +25,14 @@ public class RestDepartmentControllerImpl implements RestDepartmentController {
     public List<DtoDepartment> getAllDepartment() {
 
         return departmentService.getAllDepartment();
+    }
+
+
+
+    @GetMapping(path = "/{id}")
+    @Override
+    public DtoDepartment findDepartmentById(@PathVariable(value = "id") Long id) {
+
+        return departmentService.findDepartmentById(id);
     }
 }
