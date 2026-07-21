@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DepartmentServiceImpl implements IDepartmentService {
@@ -31,5 +32,21 @@ public class DepartmentServiceImpl implements IDepartmentService {
         }
 
         return dtoDepartmentList;
+    }
+
+
+
+    @Override
+    public DtoDepartment findDepartmentById(Long id) {
+
+        Optional<Department> optional = departmentRepository.findById(id);
+        if (optional.isEmpty()){
+            return null;
+        }
+        DtoDepartment dtoDepartment = new DtoDepartment();
+
+        BeanUtils.copyProperties(optional.get(), dtoDepartment);
+
+        return dtoDepartment;
     }
 }
