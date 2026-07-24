@@ -1,6 +1,5 @@
 package com.alikunduz.dto;
 
-import jakarta.persistence.Column;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -14,5 +13,6 @@ public class DtoEmployeeIU {
 
     private BigDecimal salary;
 
+    private Long departmentId;
 
 }

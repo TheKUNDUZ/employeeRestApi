@@ -6,6 +6,7 @@ import com.alikunduz.dto.DtoEmployee;
 import com.alikunduz.dto.DtoEmployeeIU;
 import com.alikunduz.entity.Department;
 import com.alikunduz.entity.Employee;
+import com.alikunduz.repository.DepartmentRepository;
 import com.alikunduz.repository.EmployeeRepository;
 import com.alikunduz.service.IEmployeeService;
 import org.springframework.beans.BeanUtils;
@@ -21,6 +22,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private DepartmentRepository departmentRepository;
 
     @Override
     public DtoEmployee findEmployeeById(Long id) {
@@ -49,11 +53,26 @@ public class EmployeeServiceImpl implements IEmployeeService {
         Employee employee = new Employee();
         DtoEmployee dtoEmployee = new DtoEmployee();
 
-        BeanUtils.copyProperties(dtoEmployeeIU, employee);
+        employee.setName(dtoEmployeeIU.getName());
+        employee.setLastName(dtoEmployeeIU.getLastName());
+        employee.setSalary(dtoEmployeeIU.getSalary());
+
+        if (dtoEmployeeIU.getDepartmentId() != null) {
+            Optional<Department> departmentOpt = departmentRepository.findById(dtoEmployeeIU.getDepartmentId());
+            if (departmentOpt.isPresent()) {
+                employee.setDepartment(departmentOpt.get());
+            }
+        }
 
         Employee dbEmployee = employeeRepository.save(employee);
 
         BeanUtils.copyProperties(dbEmployee, dtoEmployee);
+
+        if (dbEmployee.getDepartment() != null) {
+            DtoDepartment dtoDepartment = new DtoDepartment();
+            BeanUtils.copyProperties(dbEmployee.getDepartment(), dtoDepartment);
+            dtoEmployee.setDepartment(dtoDepartment);
+        }
 
         return dtoEmployee;
     }
@@ -113,9 +132,23 @@ public class EmployeeServiceImpl implements IEmployeeService {
             dbEmployee.setLastName(dtoEmployeeIU.getLastName());
             dbEmployee.setSalary(dtoEmployeeIU.getSalary());
 
+            if (dtoEmployeeIU.getDepartmentId() != null) {
+                Optional<Department> departmentOpt = departmentRepository.findById(dtoEmployeeIU.getDepartmentId());
+                if (departmentOpt.isPresent()) {
+                    dbEmployee.setDepartment(departmentOpt.get());
+                }
+            }
+
             Employee updatedEmployee = employeeRepository.save(dbEmployee);
 
             BeanUtils.copyProperties(updatedEmployee, dtoEmployee);
+
+            if (updatedEmployee.getDepartment() != null) {
+                DtoDepartment dtoDepartment = new DtoDepartment();
+                BeanUtils.copyProperties(updatedEmployee.getDepartment(), dtoDepartment);
+                dtoEmployee.setDepartment(dtoDepartment);
+            }
+
         return dtoEmployee;
         }
 
