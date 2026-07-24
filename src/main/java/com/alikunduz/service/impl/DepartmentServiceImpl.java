@@ -1,7 +1,9 @@
 package com.alikunduz.service.impl;
 
 import com.alikunduz.dto.DtoDepartment;
+import com.alikunduz.dto.DtoDepartmentIU;
 import com.alikunduz.entity.Department;
+import com.alikunduz.entity.Employee;
 import com.alikunduz.repository.DepartmentRepository;
 import com.alikunduz.service.IDepartmentService;
 import org.springframework.beans.BeanUtils;
@@ -46,6 +48,18 @@ public class DepartmentServiceImpl implements IDepartmentService {
         DtoDepartment dtoDepartment = new DtoDepartment();
 
         BeanUtils.copyProperties(optional.get(), dtoDepartment);
+
+        return dtoDepartment;
+    }
+
+    @Override
+    public DtoDepartment saveDepartment(DtoDepartmentIU dtoDepartmentIU) {
+        Department department = new Department();
+        DtoDepartment dtoDepartment = new DtoDepartment();
+
+        BeanUtils.copyProperties(dtoDepartmentIU, department);
+        Department dbDepartment= departmentRepository.save(department);
+        BeanUtils.copyProperties(dbDepartment,  dtoDepartment);
 
         return dtoDepartment;
     }
