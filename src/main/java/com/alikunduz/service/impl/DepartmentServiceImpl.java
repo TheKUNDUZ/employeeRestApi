@@ -2,6 +2,7 @@ package com.alikunduz.service.impl;
 
 import com.alikunduz.dto.DtoDepartment;
 import com.alikunduz.dto.DtoDepartmentIU;
+import com.alikunduz.dto.DtoEmployeeIU;
 import com.alikunduz.entity.Department;
 import com.alikunduz.entity.Employee;
 import com.alikunduz.repository.DepartmentRepository;
@@ -60,6 +61,33 @@ public class DepartmentServiceImpl implements IDepartmentService {
         BeanUtils.copyProperties(dtoDepartmentIU, department);
         Department dbDepartment= departmentRepository.save(department);
         BeanUtils.copyProperties(dbDepartment,  dtoDepartment);
+
+        return dtoDepartment;
+    }
+
+    @Override
+    public void deleteDepartment(Long id) {
+       DtoDepartment dbDepartment = findDepartmentById(id);
+        departmentRepository.deleteById(dbDepartment.getId());
+    }
+
+
+
+    @Override
+    public DtoDepartment updateDepartment(long id, DtoEmployeeIU dtoEmployeeIU) {
+
+        Department department = new Department();
+
+        DtoDepartment dtoDepartment = findDepartmentById(id);
+        BeanUtils.copyProperties(dtoDepartment, department);
+
+        BeanUtils.copyProperties(dtoEmployeeIU, department);
+
+       departmentRepository.save(department);
+
+       BeanUtils.copyProperties(department,  dtoDepartment);
+
+
 
         return dtoDepartment;
     }
