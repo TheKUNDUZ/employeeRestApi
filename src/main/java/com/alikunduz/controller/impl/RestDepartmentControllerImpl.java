@@ -50,7 +50,7 @@ public class RestDepartmentControllerImpl implements RestDepartmentController {
 
     @PutMapping(path = "/update/{id}")
     @Override
-    public DtoDepartment updateDepartment(@PathVariable(value = "id") long id,@RequestBody DtoEmployeeIU dtoEmployeeIU) {
-        return departmentService.updateDepartment(id, dtoEmployeeIU);
+    public DtoDepartment updateDepartment(@PathVariable(value = "id") long id,@RequestBody DtoDepartmentIU dtoDepartmentIU) {
+        return departmentService.updateDepartment(id, dtoDepartmentIU);
     }
 }

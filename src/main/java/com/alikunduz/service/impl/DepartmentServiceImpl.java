@@ -7,6 +7,7 @@ import com.alikunduz.entity.Department;
 import com.alikunduz.entity.Employee;
 import com.alikunduz.repository.DepartmentRepository;
 import com.alikunduz.service.IDepartmentService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,6 +75,54 @@ public class DepartmentServiceImpl implements IDepartmentService {
 
 
     @Override
+    public DtoDepartment updateDepartment(long id, DtoDepartmentIU dtoDepartmentIU) {
+
+        Department department = new Department();
+
+        DtoDepartment dtoDepartment = findDepartmentById(id);
+        BeanUtils.copyProperties(dtoDepartment, department);
+
+        BeanUtils.copyProperties(dtoDepartmentIU, department);
+
+        departmentRepository.save(department);
+
+        BeanUtils.copyProperties(department,  dtoDepartment);
+
+
+
+        return dtoDepartment;
+    }
+
+
+    /*
+    @Override
+
+    public DtoDepartment updateDepartment(long id, DtoDepartmentIU dtoDepartmentIU) {
+
+
+        Department department = departmentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Departman bulunamadı. ID: " + id));
+
+
+        BeanUtils.copyProperties(dtoDepartmentIU, department);
+
+
+        Department updatedDepartment = departmentRepository.save(department);
+
+
+        DtoDepartment responseDto = new DtoDepartment();
+        BeanUtils.copyProperties(updatedDepartment, responseDto);
+
+        return responseDto;
+    }
+    */
+
+
+
+
+    //              ESKİ HALİ
+
+    /*  @Override
     public DtoDepartment updateDepartment(long id, DtoEmployeeIU dtoEmployeeIU) {
 
         Department department = new Department();
@@ -91,4 +140,5 @@ public class DepartmentServiceImpl implements IDepartmentService {
 
         return dtoDepartment;
     }
+     */
 }
