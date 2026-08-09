@@ -77,6 +77,29 @@ public class DepartmentServiceImpl implements IDepartmentService {
     @Override
     public DtoDepartment updateDepartment(long id, DtoDepartmentIU dtoDepartmentIU) {
 
+        DtoDepartment dtoDepartment = new DtoDepartment();
+
+        Optional<Department> dbDepartment = departmentRepository.findById(id);
+        if (dbDepartment.isEmpty()){
+            return null;
+        }
+
+        Department department = dbDepartment.get();
+        BeanUtils.copyProperties(dtoDepartmentIU,department);
+
+        departmentRepository.save(department);
+
+        BeanUtils.copyProperties(department,  dtoDepartment);
+
+
+        return dtoDepartment;
+    }
+
+
+/*
+@Override
+    public DtoDepartment updateDepartment(long id, DtoDepartmentIU dtoDepartmentIU) {
+
         Department department = new Department();
 
         DtoDepartment dtoDepartment = findDepartmentById(id);
@@ -92,6 +115,13 @@ public class DepartmentServiceImpl implements IDepartmentService {
 
         return dtoDepartment;
     }
+ */
+
+
+
+
+
+
 
 
     /*
